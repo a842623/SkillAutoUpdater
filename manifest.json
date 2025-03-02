@@ -1,0 +1,10 @@
+{
+    "display_name": "Skill Auto Updater",
+    "loading_order": 1,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "author": "YourName",
+    "version": "1.0.0",
+    "auto_update": false
+}
