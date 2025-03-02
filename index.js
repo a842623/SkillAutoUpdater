@@ -17,11 +17,9 @@ function handleMessage(data) {
 }
 
 async function updateWorldbook(skillName, skillLevel, skillProficiency, skillCurrent, skillMax) {
-    // 获取世界书数据
     const worldbook = await fetchWorldbook();
     let content = worldbook.entries["15"].content;
 
-    // 计算加成和成功率
     let successRate, bonus;
     if (skillProficiency.includes("未入门")) { successRate = "0%"; bonus = "+0"; }
     else if (skillProficiency.includes("入门")) { successRate = "30%"; bonus = "+6"; }
@@ -42,16 +40,16 @@ async function updateWorldbook(skillName, skillLevel, skillProficiency, skillCur
     }
 }
 
-// 世界书读写函数（需替换为实际API或文件操作）
 async function fetchWorldbook() {
-    const response = await fetch("/api/world_info/get"); // SillyTavern API端点
-    return await response.json();
+    const response = await fetch("/api/world_info/get");
+    const worldbooks = await response.json();
+    return worldbooks.find(wb => wb.fileName === "无限流跑团.json");
 }
 
 async function saveWorldbook(worldbook) {
     await fetch("/api/world_info/edit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(worldbook.entries["15"])
+        body: JSON.stringify(worldbook)
     });
 }
